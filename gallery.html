@@ -1,0 +1,19 @@
+---
+layout: page
+title: Gallery
+permalink: /gallery/
+---
+<div id="pig"></div>
+<script src="{{site.baseurl}}/assets/js/pig.min.js"></script>
+<script>
+{% include gallery_data.html %}
+var options = {
+    urlForSize: function(filename, size) {
+        if (size === 1024)
+            return '{{site.baseurl}}/assets/html/' + filename + '.html';
+        else 
+            return '{{site.baseurl}}/assets/img/' + size + '/' + filename;
+    }
+};
+var pig = new Pig(imageData, options).enable();
+</script>
