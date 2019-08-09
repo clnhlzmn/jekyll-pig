@@ -78,7 +78,7 @@ title: "' + image_name + '"
 date: "' + image_date.to_s + '"
 exclude: true
 ---
-<img src="/assets/img/1024/' + image_name + '"></img>'
+<img src="{{site.baseurl}}/assets/img/1024/' + image_name + '"></img>'
                     
                     #create full size image page html for each image
                     File.open(File.join(html_path, image_name + ".html"), 'w') { |file| 
