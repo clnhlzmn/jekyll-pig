@@ -22,10 +22,18 @@ module GalleryGenerator
             includes_path = File.join(site.source, "_includes")
             layouts_path = File.join(site.source, "_layouts")
             
+            #check for gallery directory
             if File.directory?(gallery_path)
             
                 #array for holding image data for later
                 image_data = []
+                #read image_data if existing
+                if File.exists?(File.join(includes_path, "gallery_data.html"))
+                    File.open(File.join(includes_path, "gallery_data.html"), 'r') { |file|
+                        #get array of image data (drop 'var imageData = ' and ';')
+                        image_data = JSON.parse(file.read[16..-2])
+                    }
+                end
                 
                 #hash for holding images from mini_magick, file name is key
                 images = {}
@@ -34,7 +42,10 @@ module GalleryGenerator
                 Dir.entries(gallery_path).each { |file_name| 
                     full_image_path = File.join(gallery_path, file_name)
                     begin 
-                        images[file_name] = MiniMagick::Image.open(full_image_path)
+                        #only process images that arent already in image_data
+                        if image_data.find { |data| data['filename'] == file_name } == nil
+                            images[file_name] = MiniMagick::Image.open(full_image_path)
+                        end
                     rescue
                         #not an image
                     end
@@ -47,7 +58,7 @@ module GalleryGenerator
                 FileUtils.mkdir_p includes_path unless File.exists? includes_path
                 
                 #for each image
-                images.each { |image_name, image| 
+                images.each { |image_name, image|
                     
                     #append data to image_data array
                     image_data << 
@@ -65,10 +76,18 @@ module GalleryGenerator
                     }
                     
                     image_date = ""
-                    begin 
-                        image_date = Date.strptime(image_name[0, 10], "%Y-%m-%d")
+                    begin
+                        exif_date = image.exif['DateTimeOriginal']
+                        if exif_date == nil
+                            #no exif date, try to get from file name
+                            image_date = Date.strptime(image_name[0, 10], "%Y-%m-%d")
+                        else
+                            #try to get the image date from exif
+                            image_date = Date.strptime(exif_date[0, 10], "%Y:%m:%d")
+                        end
                     rescue
-                        #get the date from exif or file if available
+                        #get the date from file if possible
+                        image_date = ""
                     end
                     
                     full_size_html =
@@ -84,7 +103,6 @@ exclude: true
                     File.open(File.join(html_path, image_name + ".html"), 'w') { |file| 
                         file.write(full_size_html) 
                     }
-                    
                 }
                 
                 #create gallery_data include file
