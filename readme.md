@@ -19,4 +19,4 @@
 
 Visit `yoursite/gallery` for the image grid and click an image to visit the full size version
 
-Check out [mine](colinholzman.xyz/gallery)
+Check out [mine](https://colinholzman.xyz/gallery/)
