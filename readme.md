@@ -16,5 +16,7 @@
 2. an html post of each full size (1024) image in `<site_source>/assets/html` with `exclude` set to true
 
 # What you will see
+
 Visit `yoursite/gallery` for the image grid and click an image to visit the full size version
+
 Check out [mine](colinholzman.xyz/gallery)
