@@ -4,6 +4,7 @@
 #run gem install mini_magick
 #add <site source>/gallery folder with images
 #add gallery/ to exclude list in your site's _config.yml
+#add gallery.rb to your site's _plugins folder
 #run jekyll build
 
 require 'date'
