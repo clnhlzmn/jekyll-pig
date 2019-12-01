@@ -46,9 +46,12 @@ module GalleryGenerator
                         #only process images that arent already in image_data
                         if image_data.find { |data| data['filename'] == file_name } == nil
                             images[file_name] = MiniMagick::Image.open(full_image_path)
+                        else 
+                            puts "jekyll-pig: image " << file_name << " has already been processed"
                         end
                     rescue
                         #not an image
+                        puts "jekyll-pig: unable to open " << full_image_path
                     end
                 }
                 
@@ -60,6 +63,9 @@ module GalleryGenerator
                 
                 #for each image
                 images.each { |image_name, image|
+                
+                
+                    puts "jekyll-pig: processing " << image_name
                     
                     #append data to image_data array
                     image_data << 
@@ -111,6 +117,8 @@ exclude: true
                     file.write('var imageData = ' + image_data.to_json() + ';')
                 }
                 
+            else 
+                puts "jekyll-pig: no gallery at " << gallery_path
             end
         end
     end
