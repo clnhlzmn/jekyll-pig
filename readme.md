@@ -7,7 +7,7 @@
 5. add images to gallery folder
 6. add `gallery/` to exclude list in `<site source>/_config.yml`
 7. copy `jekyll-pig/gallery.rb` to `<site source>/_plugins/gallery.rb`
-8. copy `jekyll-pig/pig.min.js` to `<site source>/assets/js/pig.min.js`, note this is my [slightly modified version](https://github.com/clnhlzmn/pig.js) of pig.js
+8. copy `jekyll-pig/pig.min.js` to `<site source>/assets/js/pig.min.js`
 9. copy `jekyll-pig/gallery.html` to `<site source>/gallery.html`
 10. run `jekyll build`
 
