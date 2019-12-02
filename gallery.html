@@ -9,10 +9,10 @@ permalink: /gallery/
 {% include gallery_data.html %}
 var options = {
     urlForSize: function(filename, size) {
-        if (size === 1024)
-            return '{{site.baseurl}}/assets/html/' + filename + '.html';
-        else 
-            return '{{site.baseurl}}/assets/img/' + size + '/' + filename;
+        return '{{site.baseurl}}/assets/img/' + size + '/' + filename;
+        },
+    onClickHandler: function(filename) {
+        window.location.href = '{{site.baseurl}}/assets/html/' + filename + '.html';
     }
 };
 var pig = new Pig(imageData, options).enable();
