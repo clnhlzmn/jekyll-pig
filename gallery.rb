@@ -112,6 +112,8 @@ exclude: true
                     }
                 }
                 
+                image_data.sort_by { |data| data['filename'] }
+                
                 #create gallery_data include file
                 File.open(File.join(includes_path, "gallery_data.html"), 'w') { |file|
                     file.write('var imageData = ' + image_data.to_json() + ';')
