@@ -7,7 +7,6 @@
 #add gallery.rb to your site's _plugins folder
 #run jekyll build
 
-require 'date'
 require 'fileutils'
 require 'json'
 require 'mini_magick'
@@ -16,12 +15,12 @@ module GalleryGenerator
     class GalleryGenerator < Jekyll::Generator
     
         def full_size_html(name, date)
-            "---\n"                 \
-            "layout: post\n"        \
-            "title: \"#{name}\"\n"  \
-            "date: \"#{date.strftime("%Y-%m-%d %H:%M:%S")}\"\n"   \
-            "exclude: true\n"       \
-            "---\n"                 \
+            "---\n"                                             \
+            "layout: post\n"                                    \
+            "title: #{name}\n"                                  \
+            "date: #{date.strftime("%Y-%m-%d %H:%M:%S")}\n"     \
+            "exclude: true\n"                                   \
+            "---\n"                                             \
             "<img src=\"{{site.baseurl}}/assets/img/1024/#{name}\"></img>\n"
         end
         
@@ -65,10 +64,10 @@ module GalleryGenerator
                 exif_date = image.exif['DateTimeOriginal']
                 if exif_date == nil
                     #no exif date, try to get from file name
-                    image_date = Date.strptime(image_name, "%Y-%m-%d")
+                    image_date = Time.strptime(image_name, "%Y-%m-%d")
                 else
                     #try to get the image date from exif
-                    image_date = Date.strptime(exif_date, "%Y:%m:%d %H:%M:%S")
+                    image_date = Time.strptime(exif_date, "%Y:%m:%d %H:%M:%S")
                 end
             rescue
                 #get the date from file if possible
