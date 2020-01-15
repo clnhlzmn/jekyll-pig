@@ -59,7 +59,7 @@ module GalleryGenerator
             images
         end
         
-        def get_image_date(image_name, image)
+        def get_image_date(gallery_path, image_name, image)
             image_date = nil
             begin
                 exif_date = image.exif['DateTimeOriginal']
@@ -72,13 +72,13 @@ module GalleryGenerator
                 end
             rescue
                 #get the date from file if possible
-                image_date = ""
+                image_date = File.mtime(File.join(gallery_path, image_name))
             end
             image_date
         end
         
         #create thumbnails and fullsize image assets, and create full size html page for a given image
-        def process_image(image_data, image_name, image, img_path, html_path)
+        def process_image(gallery_path, image_data, image_name, image, img_path, html_path)
             puts "jekyll-pig: processing " << image_name
             #create thumbs
             [1024, 500, 250, 100, 20].each { |size|
@@ -88,11 +88,12 @@ module GalleryGenerator
                 image.write(File.join(size_out_path , image_name))
             }
             #get date
-            image_date = get_image_date(image_name, image)
+            image_date = get_image_date(gallery_path, image_name, image)
+            puts image_date
             #append data to image_data array
             image_data << 
                 {
-                    'datetime' => image_date,
+                    'datetime' => image_date.to_s,
                     'filename' => image_name,
                     'aspectRatio' => image.width.to_f / image.height
                 }
@@ -124,10 +125,13 @@ module GalleryGenerator
                 FileUtils.mkdir_p includes_path unless File.exists? includes_path
                 #for each image
                 images.each { |image_name, image|
-                    process_image(image_data, image_name, image, img_path, html_path)
+                    process_image(gallery_path, image_data, image_name, image, img_path, html_path)
                 }
                 #create gallery_data include file
                 File.open(File.join(includes_path, "gallery_data.html"), 'w') { |file|
+                    image_data.each { |data|
+                        puts data['datetime'].class
+                    }
                     image_data = image_data.sort_by { |data| data['datetime'] }
                     file.write('var imageData = ' + image_data.to_json() + ';')
                 }
