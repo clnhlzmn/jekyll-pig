@@ -88,7 +88,6 @@ module GalleryGenerator
             }
             #get date
             image_date = get_image_date(gallery_path, image_name, image)
-            puts image_date
             #append data to image_data array
             image_data << 
                 {
@@ -128,9 +127,6 @@ module GalleryGenerator
                 }
                 #create gallery_data include file
                 File.open(File.join(includes_path, "gallery_data.html"), 'w') { |file|
-                    image_data.each { |data|
-                        puts data['datetime'].class
-                    }
                     image_data = image_data.sort_by { |data| data['datetime'] }
                     file.write('var imageData = ' + image_data.to_json() + ';')
                 }
