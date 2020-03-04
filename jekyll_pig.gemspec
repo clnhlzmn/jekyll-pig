@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
     s.name        = 'jekyll_pig'
-    s.version     = '0.0.0'
+    s.version     = '0.0.1'
     s.date        = '2020-03-04'
     s.summary     = "Jekyll image gallery generator"
     s.description = "Uses ImageMagick and pig.js to create progressive image galleries for Jekyll pages"

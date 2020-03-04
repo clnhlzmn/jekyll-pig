@@ -199,6 +199,7 @@ module JekyllPig
             FileUtils.mkdir_p @img_path unless File.exists? @img_path
             FileUtils.mkdir_p @html_path unless File.exists? @html_path
             FileUtils.mkdir_p @includes_path unless File.exists? @includes_path
+            FileUtils.mkdir_p @data_path unless File.exists? @data_path
         end
         
         def augment_image_data(gallery, image_data, images) 
