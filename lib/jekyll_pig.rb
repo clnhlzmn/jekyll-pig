@@ -11,7 +11,7 @@ require 'fileutils'
 require 'json'
 require 'mini_magick'
 
-module GalleryGenerator
+module JekyllPig
     
     class SourceGallery
         def initialize(path, name)
@@ -29,7 +29,7 @@ module GalleryGenerator
         end
     end
 
-    class GalleryGenerator < Jekyll::Generator
+    class JekyllPig < Jekyll::Generator
     
         @@image_cache = {}
     
