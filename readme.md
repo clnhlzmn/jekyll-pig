@@ -27,7 +27,7 @@ These lines tell `jekyll_pig` where to find your images and how to organize the 
 
 ## 6. add gallery folder paths to exclude list in `_config.yml` and to your `.gitignore`
 
-## use `%{ include <gallery-name>.html %}` in your pages and posts to include a the gallery identified by `gallery-name`
+## use `{% include <gallery-name>.html %}` in your pages and posts to include a the gallery identified by `gallery-name`
 
 ## 7. run `jekyll build`
 
