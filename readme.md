@@ -4,11 +4,11 @@
 
 ## 1. install [ImageMagick](https://imagemagick.org)
 
-## 2. add `- jekyll_pig` to the plugins list in your site's `_config.yml`
+## 2. add `- jekyll-pig` to the plugins list in your site's `_config.yml`
 
-## 3. install `jekyll_pig`
+## 3. install `jekyll-pig`
 
-Either add `gem jekyll_pig` to your site's `Gemfile` and run `bundle install` or run `gem install jekyll_pig`
+Either add `gem jekyll-pig` to your site's `Gemfile` and run `bundle install` or run `gem install jekyll-pig`
 
 ## 4. add a section called `galleries` to your site's `_config.yml`
 
@@ -21,7 +21,7 @@ galleries:
     -
         <another gallery>
 ```
-These lines tell `jekyll_pig` where to find your images and how to organize the generated output. `<gallery-name>` shouldn't have any spaces.
+These lines tell `jekyll-pig` where to find your images and how to organize the generated output. `<gallery-name>` shouldn't have any spaces.
 
 ## 5. add images to your gallery folders
 
@@ -33,7 +33,7 @@ These lines tell `jekyll_pig` where to find your images and how to organize the 
 
 # What happens
 
-## jekyll_pig generates a bunch of content
+## jekyll-pig generates a bunch of content
 ```
 <site root>
 ├── _data
