@@ -1,12 +1,4 @@
 
-#install ImageMagick
-#add gem "mini_magick" to your site's Gemfile
-#run gem install mini_magick
-#add <site source>/gallery folder with images
-#use {% include gallery.html %} anywhere you want the gallery to appear
-#add gallery.rb to your site's _plugins folder
-#run jekyll build
-
 require 'fileutils'
 require 'json'
 require 'mini_magick'
