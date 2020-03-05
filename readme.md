@@ -8,7 +8,7 @@ This is a plugin that makes it easy to include progressive image galleries in yo
 
 ## 2. add `- jekyll-pig` to the plugins list in your site's `_config.yml`
 
-## 3. install `jekyll-pig`
+## 3. install jekyll-pig
 
 Either add `gem jekyll-pig` to your site's `Gemfile` and run `bundle install` or run `gem install jekyll-pig`
 
@@ -23,7 +23,7 @@ galleries:
     -
         <another gallery>
 ```
-These lines tell `jekyll-pig` where to find your images and how to organize the generated output. `<gallery-name>` shouldn't have any spaces.
+These lines tell jekyll-pig where to find your images and how to organize the generated output. `<gallery-name>` shouldn't have any spaces.
 
 ## 5. add images to your gallery folders
 
