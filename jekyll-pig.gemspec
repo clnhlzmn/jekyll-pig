@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
     s.name        = 'jekyll-pig'
-    s.version     = '0.0.1'
+    s.version     = '0.0.2'
     s.date        = '2020-03-04'
     s.summary     = "Jekyll image gallery generator"
     s.description = "Uses ImageMagick and pig.js to create progressive image galleries for Jekyll pages"
@@ -10,4 +10,5 @@ Gem::Specification.new do |s|
     s.homepage    = 'https://github.com/clnhlzmn/jekyll-pig'
     s.license     = 'MIT'
     s.add_runtime_dependency 'mini_magick', '~> 4.10'
+    s.requirements << 'ImageMagick or GraphicsMagick'
 end
