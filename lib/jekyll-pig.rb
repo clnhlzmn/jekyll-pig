@@ -136,10 +136,17 @@ module JekyllPig
                 size_out_path = File.join(@img_path, gallery_id, size.to_s)
                 resized_img_path = File.join(size_out_path, image_name)
                 if not File.exists? resized_img_path
-                    image = get_image(gallery_path, image_name)
-                    image.resize("x" + size.to_s)
                     FileUtils.mkdir_p size_out_path unless File.exists? size_out_path
-                    image.write(resized_img_path)
+                    mog = MiniMagick::Tool::Mogrify.new
+                    mog.resize("x#{size}")
+                    mog.colorspace('RGB')
+                    mog.interlace('Plane')
+                    mog.strip()
+                    mog.quality('85')
+                    mog.gaussian_blur('0.05')
+                    mog.path(size_out_path)
+                    mog << File.join(gallery_path, image_name)
+                    mog.call
                 end
             }
             full_size_html_path = File.join(@html_path, gallery_id, image_name + ".html")
