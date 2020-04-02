@@ -259,6 +259,7 @@ module JekyllPig
                 
                 #get image data from _data
                 image_data = get_image_data(gallery.name)
+                old_image_data = image_data.clone
                 
                 #get images from gallery
                 images = get_images(gallery.path)
@@ -277,15 +278,17 @@ module JekyllPig
                     process_image(image_data, gallery.name, gallery.path, image_name)
                 end
                 
-                #write image_data
-                File.open(File.join(@data_path, "#{gallery.name}.json"), 'w') { |file|
-                    file.write(image_data.to_json)
-                }
-                
-                #save this gallery's includable content
-                File.open(File.join(@includes_path, "#{gallery.name}.html"), 'w') { |file|
-                    file.write(gallery_html(gallery.name, image_data))
-                }
+                if image_data != old_image_data
+                    #write image_data
+                    File.open(File.join(@data_path, "#{gallery.name}.json"), 'w') { |file|
+                        file.write(image_data.to_json)
+                    }
+                    
+                    #save this gallery's includable content
+                    File.open(File.join(@includes_path, "#{gallery.name}.html"), 'w') { |file|
+                        file.write(gallery_html(gallery.name, image_data))
+                    }
+                end
             end
         end
     end
