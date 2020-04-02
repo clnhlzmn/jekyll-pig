@@ -76,10 +76,10 @@ module JekyllPig
             image_data
         end
         
-        #read images that require processing from gallery
-        def get_images(gallery_path)
-            patterns = ['*.jpg', '*.jpeg', '*.png'].map { |ext| File.join(gallery_path, ext) }
-            Dir.glob(patterns).map { |path| File.basename(path) }
+        #get a list of image file names from a given path
+        def get_images(path)
+            patterns = ['*.jpg', '*.jpeg', '*.png'].map { |ext| File.join(path, ext) }
+            Dir.glob(patterns).map { |filepath| File.basename(filepath) }
         end
         
         def get_image(gallery_path, image_name)
@@ -128,20 +128,48 @@ module JekyllPig
             image_html_url(gallery_name, image_data[index]['filename'])
         end
         
-        #create thumbnails and fullsize image assets, and create full size html page for a given image
-        def process_image(image_data, gallery_id, gallery_path, image_name)
-            #puts "jekyll-pig: processing " << image_name
+        #create thumbnails and fullsize image assets
+        def process_images(image_data, gallery_id, gallery_path, images)
             #create thumbs
-            [1024, 500, 250, 100, 20].each { |size|
+            sizes = [1024, 500, 250, 100, 20]
+            sizes.each { |size|
+                #output path for current size
                 size_out_path = File.join(@img_path, gallery_id, size.to_s)
-                resized_img_path = File.join(size_out_path, image_name)
-                if not File.exists? resized_img_path
-                    image = get_image(gallery_path, image_name)
-                    image.resize("x" + size.to_s)
-                    FileUtils.mkdir_p size_out_path unless File.exists? size_out_path
-                    image.write(resized_img_path)
-                end
+                FileUtils.mkdir_p size_out_path unless File.exists? size_out_path
+                
+                #images that have already been processed for the current size
+                done_images = get_images(size_out_path)
+                #all images in the gallery with the ones already done taken away
+                todo_images = images - done_images
+                
+                #function to get the source path to use for creating the given size thumbnail
+                #i.e. use the 500px sized images to make the 250px versions
+                source_for_size = -> (size) {
+                    index = sizes.index(size)
+                    source = gallery_path
+                    if index != nil && index != 0
+                        source = File.join(@img_path, gallery_id, sizes[index - 1].to_s)
+                    end
+                    source
+                }
+                
+                #do the processing in a batch
+                mog = MiniMagick::Tool::Mogrify.new
+                mog.resize("x#{size}")
+                mog.sampling_factor('4:2:0')
+                mog.colorspace('RGB')
+                mog.interlace('Plane')
+                mog.strip()
+                mog.quality('75')
+                mog.path(size_out_path)
+                source_path = source_for_size.call(size)
+                todo_images.each { |todo| mog << File.join(source_path, todo) }
+                mog.call
             }
+        end
+        
+        #create full size html page for a given image
+        def process_image(image_data, gallery_id, gallery_path, image_name)
             full_size_html_path = File.join(@html_path, gallery_id, image_name + ".html")
             #create full size html if it doesn't exist
             if not File.exists? full_size_html_path
@@ -241,9 +269,11 @@ module JekyllPig
                 #sort image data
                 image_data = image_data.sort_by { |data| data['datetime'] }
                 
-                #process images
+                #create thumbs
+                process_images(image_data, gallery.name, gallery.path, images)
+                
                 images.each do |image_name|
-                    #create thumbs, full size, and html assets for each image
+                    #create html assets for each image
                     process_image(image_data, gallery.name, gallery.path, image_name)
                 end
                 
