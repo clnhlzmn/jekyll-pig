@@ -74,7 +74,7 @@ These lines tell jekyll-pig where to find your images and how to organize the ge
 
 Wherever you `{% include <gallery-name>.html %}` you will see a progressive image gallery.
 
-Check out [mine](https://colinholzman.xyz/gallery/).
+Check out [mine](https://colinholzman.xyz/gallery).
 
 # Notes
 
