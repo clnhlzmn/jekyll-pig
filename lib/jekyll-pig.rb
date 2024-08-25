@@ -66,7 +66,7 @@ module JekyllPig
         def get_image_data(gallery_name)
             image_data = []
             #read image_data if existing
-            if File.exists?(File.join(@data_path, "#{gallery_name}.json"))
+            if File.exist?(File.join(@data_path, "#{gallery_name}.json"))
                 File.open(File.join(@data_path, "#{gallery_name}.json"), 'r') { |file|
                     #get array of image data (drop 'var imageData = ' and ';')
                     image_data = JSON.parse(file.read)
@@ -134,7 +134,7 @@ module JekyllPig
             sizes.each { |size|
                 #output path for current size
                 size_out_path = File.join(@img_path, gallery_id, size.to_s)
-                FileUtils.mkdir_p size_out_path unless File.exists? size_out_path
+                FileUtils.mkdir_p size_out_path unless File.exist? size_out_path
                 
                 #images that have already been processed for the current size
                 done_images = get_images(size_out_path)
@@ -171,7 +171,7 @@ module JekyllPig
         def process_image(image_data, gallery_id, gallery_path, image_name)
             full_size_html_path = File.join(@html_path, gallery_id, image_name + ".html")
             #create full size html if it doesn't exist
-            if not File.exists? full_size_html_path
+            if not File.exist? full_size_html_path
                 #get image date
                 image_date = get_image_date(gallery_path, image_name)
                 #create full size html text
@@ -213,12 +213,12 @@ module JekyllPig
         end
         
         def make_output_paths
-            FileUtils.mkdir_p @assets_path unless File.exists? @assets_path
-            FileUtils.mkdir_p @js_path unless File.exists? @js_path
-            FileUtils.mkdir_p @img_path unless File.exists? @img_path
-            FileUtils.mkdir_p @html_path unless File.exists? @html_path
-            FileUtils.mkdir_p @includes_path unless File.exists? @includes_path
-            FileUtils.mkdir_p @data_path unless File.exists? @data_path
+            FileUtils.mkdir_p @assets_path unless File.exist? @assets_path
+            FileUtils.mkdir_p @js_path unless File.exist? @js_path
+            FileUtils.mkdir_p @img_path unless File.exist? @img_path
+            FileUtils.mkdir_p @html_path unless File.exist? @html_path
+            FileUtils.mkdir_p @includes_path unless File.exist? @includes_path
+            FileUtils.mkdir_p @data_path unless File.exist? @data_path
         end
         
         def augment_image_data(gallery, image_data, images) 
@@ -247,12 +247,12 @@ module JekyllPig
                 
                 #make gallery specific html and image output paths
                 html_output_path = File.join(@html_path, gallery.name)
-                FileUtils.mkdir_p html_output_path unless File.exists? html_output_path
+                FileUtils.mkdir_p html_output_path unless File.exist? html_output_path
                 img_output_path = File.join(@img_path, gallery.name)
-                FileUtils.mkdir_p img_output_path unless File.exists? img_output_path
+                FileUtils.mkdir_p img_output_path unless File.exist? img_output_path
                 
                 #write pig.min.js to js path
-                if not File.exists? File.join(@js_path, 'pig.min.js')
+                if not File.exist? File.join(@js_path, 'pig.min.js')
                     File.open(File.join(@js_path, 'pig.min.js'), 'w') { |file| file.write(@@pig_min_js) }
                 end
                 
