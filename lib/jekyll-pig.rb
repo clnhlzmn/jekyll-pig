@@ -157,7 +157,6 @@ module JekyllPig
                 mog = MiniMagick::Tool::Mogrify.new
                 mog.resize("x#{size}")
                 mog.sampling_factor('4:2:0')
-                mog.colorspace('RGB')
                 mog.interlace('Plane')
                 mog.strip()
                 mog.quality('75')
