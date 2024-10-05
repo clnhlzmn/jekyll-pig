@@ -131,7 +131,7 @@ module JekyllPig
         #create thumbnails and fullsize image assets
         def process_images(image_data, gallery_id, gallery_path, images)
             #create thumbs
-            sizes = [1024, 500, 250, 100, 20]
+            sizes = [1024, 500, 250, 20]
             sizes.each { |size|
                 #output path for current size
                 size_out_path = File.join(@img_path, gallery_id, size.to_s)
