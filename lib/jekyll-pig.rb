@@ -155,7 +155,7 @@ module JekyllPig
                 
                 #do the processing in a batch
                 mog = MiniMagick::Tool::Mogrify.new
-                mog.resize("x#{size}")
+                mog.resize("x#{size}>")
                 mog.sampling_factor('4:2:0')
                 mog.interlace('Plane')
                 mog.strip()
