@@ -1,3 +1,7 @@
+# Not maintained!
+
+Willing to transfer ownership of the gem if anyone is interested. See [here](https://github.com/clnhlzmn/jekyll-pig/pull/6#issuecomment-2877370764).
+
 # jekyll-pig
 
 This is a plugin that makes it easy to include progressive image galleries in your Jekyll site. Jekyll-pig is made possible with [minimagick](https://github.com/minimagick/minimagick) and [pig.js](https://github.com/schlosser/pig.js).
